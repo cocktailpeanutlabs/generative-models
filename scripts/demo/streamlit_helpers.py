@@ -58,7 +58,8 @@ def load_model(model):
     model.cuda()
 
 
-lowvram_mode = False
+#lowvram_mode = False
+lowvram_mode = True
 
 
 def set_lowvram_mode(mode):
