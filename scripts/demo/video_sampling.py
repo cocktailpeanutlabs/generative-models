@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 from pytorch_lightning import seed_everything
 
@@ -24,6 +25,7 @@ VERSION2SPECS = {
             "guider": 2,
             "force_uc_zero_embeddings": ["cond_frames", "cond_frames_without_noise"],
             "num_steps": 25,
+            "decoding_t": 1,
         },
     },
     "svd_image_decoder": {
@@ -43,6 +45,7 @@ VERSION2SPECS = {
             "guider": 2,
             "force_uc_zero_embeddings": ["cond_frames", "cond_frames_without_noise"],
             "num_steps": 25,
+            "decoding_t": 1,
         },
     },
     "svd_xt": {
@@ -63,7 +66,7 @@ VERSION2SPECS = {
             "guider": 2,
             "force_uc_zero_embeddings": ["cond_frames", "cond_frames_without_noise"],
             "num_steps": 30,
-            "decoding_t": 14,
+            "decoding_t": 1,
         },
     },
     "svd_xt_image_decoder": {
@@ -84,7 +87,7 @@ VERSION2SPECS = {
             "guider": 2,
             "force_uc_zero_embeddings": ["cond_frames", "cond_frames_without_noise"],
             "num_steps": 30,
-            "decoding_t": 14,
+            "decoding_t": 1,
         },
     },
 }
@@ -135,12 +138,13 @@ if __name__ == "__main__":
 
         if mode == "img2vid":
             img = load_img_for_prediction(W, H)
-            cond_aug = st.number_input(
-                "Conditioning augmentation:", value=0.02, min_value=0.0
-            )
-            value_dict["cond_frames_without_noise"] = img
-            value_dict["cond_frames"] = img + cond_aug * torch.randn_like(img)
-            value_dict["cond_aug"] = cond_aug
+            if img != None:
+              cond_aug = st.number_input(
+                  "Conditioning augmentation:", value=0.02, min_value=0.0
+              )
+              value_dict["cond_frames_without_noise"] = img
+              value_dict["cond_frames"] = img + cond_aug * torch.randn_like(img)
+              value_dict["cond_aug"] = cond_aug
 
         seed = st.sidebar.number_input(
             "seed", value=23, min_value=0, max_value=int(1e9)
@@ -148,7 +152,7 @@ if __name__ == "__main__":
         seed_everything(seed)
 
         save_locally, save_path = init_save_locally(
-            os.path.join(SAVE_PATH, version), init_value=True
+            (Path(SAVE_PATH) / version).resolve(), init_value=True
         )
 
         options["num_frames"] = T

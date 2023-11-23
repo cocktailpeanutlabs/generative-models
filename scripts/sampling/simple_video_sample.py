@@ -28,7 +28,7 @@ def sample(
     motion_bucket_id: int = 127,
     cond_aug: float = 0.02,
     seed: int = 23,
-    decoding_t: int = 14,  # Number of frames decoded at a time! This eats most VRAM. Reduce if necessary.
+    decoding_t: int = 1,  # Number of frames decoded at a time! This eats most VRAM. Reduce if necessary.
     device: str = "cuda",
     output_folder: Optional[str] = None,
 ):
@@ -181,7 +181,7 @@ def sample(
 
                 os.makedirs(output_folder, exist_ok=True)
                 base_count = len(glob(os.path.join(output_folder, "*.mp4")))
-                video_path = os.path.join(output_folder, f"{base_count:06d}.mp4")
+                video_path = (Path(output_folder) / f"{base_count:06d}.mp4").resolve()
                 writer = cv2.VideoWriter(
                     video_path,
                     cv2.VideoWriter_fourcc(*"MP4V"),
