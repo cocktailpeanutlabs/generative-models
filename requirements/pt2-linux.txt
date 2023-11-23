@@ -30,8 +30,7 @@ urllib3<1.27,>=1.25.4
 wandb>=0.15.6
 webdataset>=0.2.33
 wheel>=0.41.0
---extra-index-url https://download.pytorch.org/whl/cu121
 torch
 torchaudio
 torchvision
-xformers
+xformers=0.0.22.post7
