@@ -2,7 +2,10 @@ import os
 from urllib.parse import urlparse
 import requests
 from tqdm import tqdm
-def download(url):
+import streamlit as st
+
+@st.cache_resource()
+def download_model(url):
     parsed_url = urlparse(url)
     file_path = os.path.basename(parsed_url.path)
     if not os.path.exists(file_path):
