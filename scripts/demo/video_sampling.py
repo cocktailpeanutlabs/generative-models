@@ -4,6 +4,7 @@ from pathlib import Path
 from pytorch_lightning import seed_everything
 
 from scripts.demo.streamlit_helpers import *
+from scripts.demo.helpers import *
 
 SAVE_PATH = "outputs/demo/vid/"
 
@@ -92,6 +93,13 @@ VERSION2SPECS = {
     },
 }
 
+DOWNLOAD = {
+    "svd": "https://huggingface.co/stabilityai/stable-video-diffusion-img2vid/resolve/main/svd.safetensors?download=true",
+    "svd_image_decoder": "https://huggingface.co/stabilityai/stable-video-diffusion-img2vid/resolve/main/svd_image_decoder.safetensors?download=true",
+    "svd_xt": "https://huggingface.co/stabilityai/stable-video-diffusion-img2vid-xt/resolve/main/svd_xt.safetensors?download=true",
+    "svd_xt_image_decoder": "https://huggingface.co/stabilityai/stable-video-diffusion-img2vid-xt/resolve/main/svd_xt_image_decoder.safetensors?download=true"
+}
+
 
 if __name__ == "__main__":
     st.title("Stable Video Diffusion")
@@ -101,6 +109,7 @@ if __name__ == "__main__":
         0,
     )
     version_dict = VERSION2SPECS[version]
+    download_url = DOWNOAD[version]
     if st.checkbox("Load Model"):
         mode = "img2vid"
     else:
@@ -120,6 +129,10 @@ if __name__ == "__main__":
     options = version_dict["options"]
 
     if mode != "skip":
+        print("# download start")
+        download(download_url)
+        print("# download finished")
+
         state = init_st(version_dict, load_filter=True)
         if state["msg"]:
             st.info(state["msg"])
