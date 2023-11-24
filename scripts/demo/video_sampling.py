@@ -109,7 +109,7 @@ if __name__ == "__main__":
         0,
     )
     version_dict = VERSION2SPECS[version]
-    download_url = DOWNOAD[version]
+    download_url = DOWNLOAD[version]
     if st.checkbox("Load Model"):
         mode = "img2vid"
     else:
