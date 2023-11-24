@@ -130,8 +130,7 @@ if __name__ == "__main__":
 
     if mode != "skip":
 
-        download_model(download_url)
-
+        file_path = download_model(download_url)
 
         state = init_st(version_dict, load_filter=True)
         if state["msg"]:
