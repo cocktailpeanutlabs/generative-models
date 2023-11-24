@@ -129,9 +129,6 @@ if __name__ == "__main__":
     options = version_dict["options"]
 
     if mode != "skip":
-        print("# download start")
-        download(download_url)
-        print("# download finished")
 
         state = init_st(version_dict, load_filter=True)
         if state["msg"]:
@@ -188,6 +185,11 @@ if __name__ == "__main__":
             saving_fps = value_dict["fps"]
 
         if st.button("Sample"):
+
+            print("# download start")
+            download(download_url)
+            print("# download finished")
+
             out = do_sample(
                 model,
                 sampler,
