@@ -7,7 +7,7 @@ import streamlit as st
 @st.cache_resource()
 def download_model(url):
     parsed_url = urlparse(url)
-    file_path = os.path.basename(parsed_url.path)
+    file_path = os.path.join("../../checkpoints", os.path.basename(parsed_url.path))
     if not os.path.exists(file_path):
         print(f"Downloading file from {url}...")
         response = requests.get(url)
